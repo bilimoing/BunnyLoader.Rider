@@ -1,5 +1,5 @@
-<idea-plugin><version>0.2.2</version><idea-version since-build="261" until-build="261.*"/>
-    <id>dev.bunnyloader.rider</id>
+<idea-plugin><version>0.2.3</version><idea-version since-build="261" until-build="261.*"/>
+    <id>dev.bunnyloader.modtools</id>
     <name>BunnyLoader Mod SDK</name>
     <vendor>末泠</vendor>
     <description><![CDATA[
