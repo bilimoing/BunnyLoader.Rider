@@ -1,19 +1,17 @@
-<idea-plugin><version>0.2.3</version><idea-version since-build="261" until-build="261.*"/>
+<idea-plugin><version>0.2.5</version><idea-version since-build="261" until-build="261.*"/>
     <id>dev.bunnyloader.modtools</id>
-    <name>BunnyLoader Mod SDK</name>
+    <name>BunnyLoaderModCreater</name>
     <vendor>末泠</vendor>
     <description><![CDATA[
-        Create desktop C# BunnyLoader mods and ModItems using installed dotnet templates.
-        Native Rider New Solution wizard with theme-aware controls, live Mod icon/name/author/version preview and automatic solution generation.
-        Requires .NET 10 SDK and blmod / blitem templates. Uses BunnyLoader.ModSdk 0.1.1.
+        A plugin for creating BunnyLoader Mods in Rider.
     ]]></description>
+    <resource-bundle>messages.BunnyBundle</resource-bundle>
     <depends>com.intellij.modules.rider</depends>
     <extensions defaultExtensionNs="com.intellij">
         <projectTemplateProviderNew implementation="dev.bunnyloader.rider.BunnyModTemplateProvider"/>
     </extensions>
     <actions>
-        <action id="BunnyLoader.NewModItem" class="dev.bunnyloader.rider.NewModItemAction"
-                text="BunnyLoader ModItem..." description="Create a ModItem in the selected directory">
+        <action id="BunnyLoader.NewModItem" class="dev.bunnyloader.rider.NewModItemAction">
             <add-to-group group-id="NewGroup" anchor="last"/>
         </action>
     </actions>

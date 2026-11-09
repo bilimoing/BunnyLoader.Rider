@@ -32,12 +32,12 @@ extends DialogWrapper {
     ItemDialog(Project project, Path path) {
         super(project, true);
         this.directory = path;
-        this.setTitle("New BunnyLoader ModItem");
+        this.setTitle(BunnyBundle.message("dialog.item.title"));
         this.init();
     }
 
     protected JComponent createCenterPanel() {
-        return FormBuilder.createFormBuilder().addLabeledComponent("Class name:", (JComponent)this.name).addLabeledComponent("Namespace:", (JComponent)this.namespace).addLabeledComponent("Selected directory:", (JComponent)new JLabel(this.directory.toString())).addComponent((JComponent)new JLabel("Requires installed dotnet template: blitem.")).getPanel();
+        return FormBuilder.createFormBuilder().addLabeledComponent(BunnyBundle.message("item.class.name"), (JComponent)this.name).addLabeledComponent(BunnyBundle.message("item.namespace"), (JComponent)this.namespace).addLabeledComponent(BunnyBundle.message("item.directory"), (JComponent)new JLabel(this.directory.toString())).addComponent((JComponent)new JLabel(BunnyBundle.message("item.template.hint"))).getPanel();
     }
 
     public JComponent getPreferredFocusedComponent() {
@@ -47,16 +47,16 @@ extends DialogWrapper {
     @Nullable
     protected ValidationInfo doValidate() {
         if (!Inputs.isIdentifier(this.itemName())) {
-            return new ValidationInfo("Use a C# class identifier (for example MyItem).", (JComponent)this.name);
+            return new ValidationInfo(BunnyBundle.message("validation.item.name"), (JComponent)this.name);
         }
         if (!Inputs.isNamespace(this.namespace())) {
-            return new ValidationInfo("Enter a C# namespace (for example MyMod.Items).", (JComponent)this.namespace);
+            return new ValidationInfo(BunnyBundle.message("validation.item.namespace"), (JComponent)this.namespace);
         }
         if (Files.exists(this.directory.resolve(this.itemName() + ".cs"), new LinkOption[0])) {
-            return new ValidationInfo("A file with this class name already exists.", (JComponent)this.name);
+            return new ValidationInfo(BunnyBundle.message("validation.item.exists"), (JComponent)this.name);
         }
         if (!Files.isDirectory(this.directory, new LinkOption[0]) || !Files.isWritable(this.directory)) {
-            return new ValidationInfo("The selected directory is not writable.");
+            return new ValidationInfo(BunnyBundle.message("validation.item.directory"));
         }
         return null;
     }

@@ -81,7 +81,7 @@ implements ProjectTemplateProvider {
         }
 
         public String getGroup() {
-            return "BunnyLoader";
+            return BunnyBundle.message("template.group");
         }
 
         public Icon getIcon() {
@@ -89,7 +89,7 @@ implements ProjectTemplateProvider {
         }
 
         public String getName() {
-            return "BunnyLoader Mod";
+            return BunnyBundle.message("template.name");
         }
 
         public int getOrder() {

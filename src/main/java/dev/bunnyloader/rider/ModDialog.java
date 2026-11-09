@@ -23,8 +23,8 @@ extends DialogWrapper {
     ModDialog(@Nullable Project project) {
         super(project, true);
         this.form = new ModForm(project);
-        this.setTitle("\u65b0\u5efa BunnyLoader Mod");
-        this.setOKButtonText("\u521b\u5efa Mod");
+        this.setTitle(BunnyBundle.message("dialog.mod.title"));
+        this.setOKButtonText(BunnyBundle.message("button.create.mod"));
         this.init();
     }
 

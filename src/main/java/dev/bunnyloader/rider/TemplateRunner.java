@@ -50,7 +50,7 @@ final class TemplateRunner {
              */
             public void run(@NotNull ProgressIndicator progressIndicator) {
                 progressIndicator.setIndeterminate(true);
-                progressIndicator.setText("Running dotnet new\u2026");
+                progressIndicator.setText(BunnyBundle.message("progress.dotnet.new"));
                 try {
                     GeneralCommandLine generalCommandLine = new GeneralCommandLine(new String[]{"dotnet"}).withParameters(list).withCharset(StandardCharsets.UTF_8);
                     CapturingProcessHandler capturingProcessHandler = new CapturingProcessHandler(generalCommandLine);
@@ -59,12 +59,12 @@ final class TemplateRunner {
                         return;
                     }
                     if (processOutput.getExitCode() != 0) {
-                        this.error = "dotnet new failed (exit " + processOutput.getExitCode() + ").\n\n" + processOutput.getStderr() + "\n" + processOutput.getStdout() + "\nCheck that .NET SDK is on Rider's PATH and the requested blmod / blitem template is installed.\nGenerated files, if any, were kept. Inspect the destination before retrying.";
+                        this.error = BunnyBundle.message("error.dotnet.new", Integer.toString(processOutput.getExitCode()), processOutput.getStderr(), processOutput.getStdout());
                     }
                 }
                 catch (ExecutionException executionException) {
                     LOG.warn("Unable to execute BunnyLoader template", (Throwable)executionException);
-                    this.error = "Unable to start dotnet. Install .NET SDK, make dotnet available on Rider's PATH, and restart Rider.\n\n" + executionException.getMessage();
+                    this.error = BunnyBundle.message("error.dotnet.start", executionException.getMessage());
                 }
                 finally {
                     ApplicationManager.getApplication().invokeLater(() -> LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path));
@@ -84,7 +84,7 @@ final class TemplateRunner {
 
             public void onCancel() {
                 if (project == null || !project.isDisposed()) {
-                    Messages.showInfoMessage((Project)project, (String)"Template creation was cancelled. Any files already written were kept; inspect the destination before retrying.", (String)string);
+                    Messages.showInfoMessage((Project)project, (String)BunnyBundle.message("creation.template.cancelled"), (String)string);
                 }
             }
         }.queue();

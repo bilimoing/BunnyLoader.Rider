@@ -60,7 +60,7 @@ public final class ModCreator {
     }
 
     public static void create(final @Nullable Project project, final Request request) {
-        new Task.Backgroundable(project, "\u521b\u5efa BunnyLoader Mod", true){
+        new Task.Backgroundable(project, BunnyBundle.message("task.create.mod"), true){
             private String failure;
 
             public void run(@NotNull ProgressIndicator progressIndicator) {
@@ -70,15 +70,15 @@ public final class ModCreator {
                     if (Files.exists(path, new LinkOption[0])) {
                         try (Stream<Path> stream = Files.list(path);){
                             if (stream.findAny().isPresent()) {
-                                throw new IOException("\u76ee\u6807\u76ee\u5f55\u5df2\u7ecf\u5305\u542b\u6587\u4ef6\uff0c\u8bf7\u9009\u62e9\u7a7a\u76ee\u5f55\u3002");
+                                throw new IOException(BunnyBundle.message("error.destination.not.empty"));
                             }
                         }
                     }
-                    progressIndicator.setText("\u751f\u6210 Mod \u5de5\u7a0b\u3001\u4ee3\u7801\u548c\u8d44\u6e90\u2026");
+                    progressIndicator.setText(BunnyBundle.message("progress.generate.mod"));
                     ModCreator.command(progressIndicator, List.of("new", "blmod", "-n", request.projectName(), "-o", path.toString(), "--modId", request.id(), "--modAuthor", request.author()));
                     progressIndicator.checkCanceled();
                     ModCreator.configureManifest(path, request);
-                    progressIndicator.setText("\u521b\u5efa Rider / .NET \u89e3\u51b3\u65b9\u6848\u2026");
+                    progressIndicator.setText(BunnyBundle.message("progress.create.solution"));
                     ModCreator.command(progressIndicator, List.of("new", "sln", "-n", request.projectName(), "--format", "slnx", "-o", path.toString()));
                     ModCreator.command(progressIndicator, List.of("sln", path.resolve(request.projectName() + ".slnx").toString(), "add", path.resolve(request.projectName() + ".csproj").toString()));
                     progressIndicator.checkCanceled();
@@ -87,7 +87,7 @@ public final class ModCreator {
                     throw processCanceledException;
                 }
                 catch (Exception exception) {
-                    this.failure = exception.getMessage() + "\n\n\u8bf7\u786e\u8ba4 .NET 10\u3001blmod \u6a21\u677f\u548c BunnyLoader SDK \u5df2\u5b89\u88c5\u3002\u5df2\u751f\u6210\u7684\u6587\u4ef6\u4f1a\u4fdd\u7559\uff0c\u8bf7\u68c0\u67e5\u76ee\u5f55\u540e\u91cd\u8bd5\u3002";
+                    this.failure = BunnyBundle.message("error.create.mod", exception.getMessage());
                 }
             }
 
@@ -96,7 +96,7 @@ public final class ModCreator {
                     return;
                 }
                 if (this.failure != null) {
-                    Messages.showErrorDialog((Project)project, (String)this.failure, (String)"\u521b\u5efa BunnyLoader Mod \u5931\u8d25");
+                    Messages.showErrorDialog((Project)project, (String)this.failure, (String)BunnyBundle.message("error.create.mod.title"));
                     return;
                 }
                 LocalFileSystem.getInstance().refreshAndFindFileByNioFile(request.destination());
@@ -105,7 +105,7 @@ public final class ModCreator {
 
             public void onCancel() {
                 if (project == null || !project.isDisposed()) {
-                    Messages.showInfoMessage((Project)project, (String)"\u521b\u5efa\u5df2\u53d6\u6d88\uff0c\u5df2\u751f\u6210\u7684\u6587\u4ef6\u4fdd\u7559\u5728\u76ee\u6807\u76ee\u5f55\u4e2d\u3002", (String)"BunnyLoader Mod");
+                    Messages.showInfoMessage((Project)project, (String)BunnyBundle.message("creation.mod.cancelled"), (String)BunnyBundle.message("dialog.mod.info.title"));
                 }
             }
         }.queue();
@@ -123,10 +123,10 @@ public final class ModCreator {
         if (request.icon() != null) {
             BufferedImage bufferedImage = ImageIO.read(request.icon().toFile());
             if (bufferedImage == null) {
-                throw new IOException("\u65e0\u6cd5\u8bfb\u53d6\u6240\u9009\u56fe\u6807\u3002");
+                throw new IOException(BunnyBundle.message("error.icon.selected.read"));
             }
             if (!ImageIO.write((RenderedImage)bufferedImage, "png", path.resolve("icon.png").toFile())) {
-                throw new IOException("\u65e0\u6cd5\u4fdd\u5b58 icon.png\u3002");
+                throw new IOException(BunnyBundle.message("error.icon.save"));
             }
         }
     }
@@ -139,7 +139,7 @@ public final class ModCreator {
             throw new ProcessCanceledException();
         }
         if (processOutput.getExitCode() != 0) {
-            throw new IOException("dotnet " + list.get(0) + " \u5931\u8d25\uff08" + processOutput.getExitCode() + "\uff09\n" + processOutput.getStderr() + "\n" + processOutput.getStdout());
+            throw new IOException(BunnyBundle.message("error.dotnet.command", list.get(0), Integer.toString(processOutput.getExitCode()), processOutput.getStderr(), processOutput.getStdout()));
         }
     }
 

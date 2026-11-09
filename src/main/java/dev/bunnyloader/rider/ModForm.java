@@ -70,8 +70,8 @@ public final class ModForm {
     private final JTextField destination = new JTextField(28);
     @Nullable
     private final Project project;
-    private final JLabel iconName = ModForm.label("\u672a\u9009\u62e9\u56fe\u6807", MUTED);
-    private final JButton removeIcon = new JButton("\u79fb\u9664");
+    private final JLabel iconName = ModForm.label(BunnyBundle.message("mod.icon.none"), MUTED);
+    private final JButton removeIcon = new JButton(BunnyBundle.message("button.remove"));
     @Nullable
     private Path selectedIcon;
     private boolean idEdited;
@@ -95,35 +95,35 @@ public final class ModForm {
         content.setOpaque(false);
         JPanel jPanel = new JPanel(new GridBagLayout());
         jPanel.setOpaque(false);
-        ModForm.addRow(jPanel, 0, "\u9879\u76ee\u540d\u79f0\uff08C#\uff09", this.projectName);
-        ModForm.addRow(jPanel, 1, "Mod \u540d\u79f0", this.displayName);
-        ModForm.addRow(jPanel, 2, "Mod ID", this.modId);
-        ModForm.addRow(jPanel, 3, "\u4f5c\u8005", this.author);
-        ModForm.addRow(jPanel, 4, "\u7248\u672c", this.version);
+        ModForm.addRow(jPanel, 0, BunnyBundle.message("mod.project.name"), this.projectName);
+        ModForm.addRow(jPanel, 1, BunnyBundle.message("mod.display.name"), this.displayName);
+        ModForm.addRow(jPanel, 2, BunnyBundle.message("mod.id"), this.modId);
+        ModForm.addRow(jPanel, 3, BunnyBundle.message("mod.author"), this.author);
+        ModForm.addRow(jPanel, 4, BunnyBundle.message("mod.version"), this.version);
         this.uid.setEditable(false);
-        this.uid.setToolTipText("Mod \u7684\u552f\u4e00\u6807\u8bc6\uff1b\u53d1\u5e03\u540e\u8bf7\u4fdd\u6301\u4e0d\u53d8\u3002");
-        JButton jButton = new JButton("\u91cd\u65b0\u751f\u6210");
+        this.uid.setToolTipText(BunnyBundle.message("mod.uid.tooltip"));
+        JButton jButton = new JButton(BunnyBundle.message("button.regenerate"));
         jButton.addActionListener(actionEvent -> this.uid.setText(UUID.randomUUID().toString()));
-        ModForm.addRow(jPanel, 5, "\u552f\u4e00\u6807\u8bc6\uff08UUID\uff09", ModForm.withButton(this.uid, jButton));
-        ModForm.addRow(jPanel, 6, "\u56fe\u6807\uff08PNG / JPEG\uff09", this.iconControls());
-        JButton jButton2 = new JButton("\u6d4f\u89c8\u2026");
+        ModForm.addRow(jPanel, 5, BunnyBundle.message("mod.uid"), ModForm.withButton(this.uid, jButton));
+        ModForm.addRow(jPanel, 6, BunnyBundle.message("mod.icon"), this.iconControls());
+        JButton jButton2 = new JButton(BunnyBundle.message("button.browse"));
         jButton2.addActionListener(actionEvent -> this.chooseDestination());
-        ModForm.addRow(jPanel, 7, "\u76ee\u6807\u9879\u76ee\u76ee\u5f55", ModForm.withButton(this.destination, jButton2));
+        ModForm.addRow(jPanel, 7, BunnyBundle.message("mod.destination"), ModForm.withButton(this.destination, jButton2));
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.fill = 2;
         gridBagConstraints.insets = new Insets(2, 8, 4, 0);
-        jPanel.add((Component)ModForm.label("\u9009\u62e9\u65b0\u76ee\u5f55\u6216\u7a7a\u76ee\u5f55\uff1b\u9879\u76ee\u540d\u79f0\u4e0e\u663e\u793a\u540d\u79f0\u72ec\u7acb\u3002", MUTED), gridBagConstraints);
+        jPanel.add((Component)ModForm.label(BunnyBundle.message("mod.destination.hint"), MUTED), gridBagConstraints);
         content.add(jPanel, BorderLayout.NORTH);
         content.add(createPreview(), BorderLayout.SOUTH);
         this.root.add(content, BorderLayout.NORTH);
-        this.projectName.setToolTipText("C# \u9879\u76ee\u6807\u8bc6\u7b26\uff0c\u4f8b\u5982 MyMod\uff1b\u4e0d\u80fd\u4f7f\u7528 C# \u4fdd\u7559\u5173\u952e\u5b57\u3002");
-        this.displayName.setToolTipText("\u5728 BunnyLoader \u4e2d\u663e\u793a\u7684\u540d\u79f0\uff0c\u53ef\u4ee5\u5305\u542b\u4e2d\u6587\u4e0e\u7a7a\u683c\u3002");
-        this.modId.setToolTipText("1\u201364 \u4f4d\u5c0f\u5199\u5b57\u6bcd\u3001\u6570\u5b57\u6216\u4e0b\u5212\u7ebf\uff0c\u4ee5\u5b57\u6bcd\u5f00\u5934\uff1b\u624b\u52a8\u7f16\u8f91\u540e\u4e0d\u518d\u81ea\u52a8\u66f4\u65b0\u3002");
-        this.version.setToolTipText("1\u201364 \u4f4d\u5b57\u6bcd\u3001\u6570\u5b57\u3001\u70b9\u3001\u4e0b\u5212\u7ebf\u3001\u52a0\u53f7\u6216\u8fde\u5b57\u7b26\uff0c\u4ee5\u5b57\u6bcd\u6216\u6570\u5b57\u5f00\u5934\u3002");
-        this.destination.setToolTipText("\u5b8c\u6574\u9879\u76ee\u76ee\u5f55\uff0c\u800c\u975e\u5176\u7236\u76ee\u5f55\u3002");
+        this.projectName.setToolTipText(BunnyBundle.message("mod.project.name.tooltip"));
+        this.displayName.setToolTipText(BunnyBundle.message("mod.display.name.tooltip"));
+        this.modId.setToolTipText(BunnyBundle.message("mod.id.tooltip"));
+        this.version.setToolTipText(BunnyBundle.message("mod.version.tooltip"));
+        this.destination.setToolTipText(BunnyBundle.message("mod.destination.tooltip"));
         ModForm.watch(this.modId, () -> {
             if (!this.updatingId) {
                 this.idEdited = true;
@@ -164,16 +164,16 @@ public final class ModForm {
         card.add(label("C#", MUTED), BorderLayout.EAST);
         JPanel section = new JPanel(new BorderLayout(0, 6));
         section.setOpaque(false);
-        section.add(label("Mod 预览", MUTED), BorderLayout.NORTH);
+        section.add(label(BunnyBundle.message("mod.preview"), MUTED), BorderLayout.NORTH);
         section.add(card, BorderLayout.CENTER);
         return section;
     }
 
     private void updatePreview() {
-        previewName.setText(displayName().isBlank() ? "Mod 名称" : displayName());
+        previewName.setText(displayName().isBlank() ? BunnyBundle.message("mod.display.name") : displayName());
         previewName.setToolTipText(displayName());
-        previewDetails.setText((author().isBlank() ? "作者" : author()) +
-                (version().isBlank() ? "" : " · v" + version()));
+        previewDetails.setText(version().isBlank() ? (author().isBlank() ? BunnyBundle.message("mod.author") : author()) :
+                BunnyBundle.message("mod.preview.details", author().isBlank() ? BunnyBundle.message("mod.author") : author(), version()));
         if (previewImage == null) {
             previewIcon.setIcon(null);
             previewIcon.setText("BL");
@@ -236,83 +236,83 @@ public final class ModForm {
     @Nullable
     public ValidationInfo validateForm() {
         if (!Inputs.isIdentifier(this.projectName())) {
-            return new ValidationInfo("\u9879\u76ee\u540d\u79f0\u987b\u4e3a\u6709\u6548 C# \u6807\u8bc6\u7b26\uff0c\u4f8b\u5982 MyMod\uff0c\u4e14\u4e0d\u80fd\u662f\u4fdd\u7559\u5173\u952e\u5b57\u3002", (JComponent)this.projectName);
+            return new ValidationInfo(BunnyBundle.message("validation.project.name"), (JComponent)this.projectName);
         }
         if (this.displayName().isBlank()) {
-            return new ValidationInfo("\u8bf7\u8f93\u5165 Mod \u663e\u793a\u540d\u79f0\u3002", (JComponent)this.displayName);
+            return new ValidationInfo(BunnyBundle.message("validation.display.name"), (JComponent)this.displayName);
         }
         if (!this.id().matches(ID_PATTERN)) {
-            return new ValidationInfo("Mod ID \u987b\u4e3a 1\u201364 \u4f4d\u5c0f\u5199\u5b57\u6bcd\u3001\u6570\u5b57\u6216\u4e0b\u5212\u7ebf\uff0c\u5e76\u4ee5\u5b57\u6bcd\u5f00\u5934\u3002", (JComponent)this.modId);
+            return new ValidationInfo(BunnyBundle.message("validation.mod.id"), (JComponent)this.modId);
         }
-        if (this.author().isBlank()) return new ValidationInfo("\u8bf7\u8f93\u5165\u4f5c\u8005\uff0c\u4e14\u4e0d\u80fd\u4ee5\u8fde\u5b57\u7b26\u5f00\u5934\u3002", (JComponent)this.author);
+        if (this.author().isBlank()) return new ValidationInfo(BunnyBundle.message("validation.author"), (JComponent)this.author);
         if (this.author().startsWith("-")) {
-            return new ValidationInfo("\u8bf7\u8f93\u5165\u4f5c\u8005\uff0c\u4e14\u4e0d\u80fd\u4ee5\u8fde\u5b57\u7b26\u5f00\u5934\u3002", (JComponent)this.author);
+            return new ValidationInfo(BunnyBundle.message("validation.author"), (JComponent)this.author);
         }
-        if (!this.version().matches(VERSION_PATTERN)) return new ValidationInfo("\u7248\u672c\u987b\u4e3a 1\u201364 \u4f4d\u5b89\u5168\u6587\u4ef6\u540d\u5b57\u7b26\uff0c\u4ee5\u5b57\u6bcd\u6216\u6570\u5b57\u5f00\u5934\uff0c\u4e0d\u80fd\u4ee5\u70b9\u7ed3\u5c3e\u3002", (JComponent)this.version);
+        if (!this.version().matches(VERSION_PATTERN)) return new ValidationInfo(BunnyBundle.message("validation.version"), (JComponent)this.version);
         if (this.version().endsWith(".")) {
-            return new ValidationInfo("\u7248\u672c\u987b\u4e3a 1\u201364 \u4f4d\u5b89\u5168\u6587\u4ef6\u540d\u5b57\u7b26\uff0c\u4ee5\u5b57\u6bcd\u6216\u6570\u5b57\u5f00\u5934\uff0c\u4e0d\u80fd\u4ee5\u70b9\u7ed3\u5c3e\u3002", (JComponent)this.version);
+            return new ValidationInfo(BunnyBundle.message("validation.version"), (JComponent)this.version);
         }
         if (!this.uid().matches(UUID_PATTERN)) {
-            return new ValidationInfo("UUID \u683c\u5f0f\u65e0\u6548\uff0c\u8bf7\u91cd\u65b0\u751f\u6210\u3002", (JComponent)this.uid);
+            return new ValidationInfo(BunnyBundle.message("validation.uuid"), (JComponent)this.uid);
         }
         try {
             UUID.fromString(this.uid());
         }
         catch (IllegalArgumentException illegalArgumentException) {
-            return new ValidationInfo("UUID \u683c\u5f0f\u65e0\u6548\uff0c\u8bf7\u91cd\u65b0\u751f\u6210\u3002", (JComponent)this.uid);
+            return new ValidationInfo(BunnyBundle.message("validation.uuid"), (JComponent)this.uid);
         }
         if (this.selectedIcon != null) {
             try {
-                if (!Files.isRegularFile(this.selectedIcon, new LinkOption[0])) return new ValidationInfo("\u56fe\u6807\u5fc5\u987b\u662f\u53ef\u8bfb\u53d6\u3001\u53ef\u89e3\u7801\u7684 PNG \u6216 JPEG \u56fe\u50cf\u3002", (JComponent)this.iconName);
-                if (!Files.isReadable(this.selectedIcon)) return new ValidationInfo("\u56fe\u6807\u5fc5\u987b\u662f\u53ef\u8bfb\u53d6\u3001\u53ef\u89e3\u7801\u7684 PNG \u6216 JPEG \u56fe\u50cf\u3002", (JComponent)this.iconName);
+                if (!Files.isRegularFile(this.selectedIcon, new LinkOption[0])) return new ValidationInfo(BunnyBundle.message("validation.icon"), (JComponent)this.iconName);
+                if (!Files.isReadable(this.selectedIcon)) return new ValidationInfo(BunnyBundle.message("validation.icon"), (JComponent)this.iconName);
                 if (ImageIO.read(this.selectedIcon.toFile()) == null) {
-                    return new ValidationInfo("\u56fe\u6807\u5fc5\u987b\u662f\u53ef\u8bfb\u53d6\u3001\u53ef\u89e3\u7801\u7684 PNG \u6216 JPEG \u56fe\u50cf\u3002", (JComponent)this.iconName);
+                    return new ValidationInfo(BunnyBundle.message("validation.icon"), (JComponent)this.iconName);
                 }
             }
             catch (IOException | RuntimeException exception) {
-                return new ValidationInfo("\u65e0\u6cd5\u8bfb\u53d6\u56fe\u6807\uff1a" + ModForm.errorMessage(exception), (JComponent)this.iconName);
+                return new ValidationInfo(BunnyBundle.message("error.icon.read", ModForm.errorMessage(exception)), (JComponent)this.iconName);
             }
         }
         try {
             Path path;
             if (this.destination.getText().isBlank()) {
-                return new ValidationInfo("\u8bf7\u9009\u62e9\u5b8c\u6574\u7684\u76ee\u6807\u9879\u76ee\u76ee\u5f55\u3002", (JComponent)this.destination);
+                return new ValidationInfo(BunnyBundle.message("validation.destination.required"), (JComponent)this.destination);
             }
             Path path2 = this.destination();
             if (!path2.isAbsolute()) {
-                return new ValidationInfo("\u76ee\u6807\u76ee\u5f55\u5fc5\u987b\u662f\u7edd\u5bf9\u8def\u5f84\u3002", (JComponent)this.destination);
+                return new ValidationInfo(BunnyBundle.message("validation.destination.absolute"), (JComponent)this.destination);
             }
             if (Files.exists(path2, LinkOption.NOFOLLOW_LINKS)) {
                 if (!Files.isDirectory(path2, new LinkOption[0])) {
-                    return new ValidationInfo("\u76ee\u6807\u8def\u5f84\u5fc5\u987b\u662f\u76ee\u5f55\u3002", (JComponent)this.destination);
+                    return new ValidationInfo(BunnyBundle.message("validation.destination.directory"), (JComponent)this.destination);
                 }
                 try (Stream<Path> stream = Files.list(path2);){
                     if (!stream.findAny().isPresent()) return null;
-                    ValidationInfo validationInfo = new ValidationInfo("\u8bf7\u9009\u62e9\u65b0\u76ee\u5f55\u6216\u7a7a\u76ee\u5f55\uff0c\u4ee5\u514d\u8986\u76d6\u73b0\u6709\u6587\u4ef6\u3002", (JComponent)this.destination);
+                    ValidationInfo validationInfo = new ValidationInfo(BunnyBundle.message("validation.destination.empty"), (JComponent)this.destination);
                     return validationInfo;
                 }
             }
             for (path = path2.getParent(); path != null && !Files.exists(path, LinkOption.NOFOLLOW_LINKS); path = path.getParent()) {
             }
-            if (path == null) return new ValidationInfo("\u76ee\u6807\u76ee\u5f55\u7684\u4e0a\u7ea7\u8def\u5f84\u5fc5\u987b\u662f\u53ef\u5199\u76ee\u5f55\u3002", (JComponent)this.destination);
-            if (!Files.isDirectory(path, new LinkOption[0])) return new ValidationInfo("\u76ee\u6807\u76ee\u5f55\u7684\u4e0a\u7ea7\u8def\u5f84\u5fc5\u987b\u662f\u53ef\u5199\u76ee\u5f55\u3002", (JComponent)this.destination);
+            if (path == null) return new ValidationInfo(BunnyBundle.message("validation.destination.parent"), (JComponent)this.destination);
+            if (!Files.isDirectory(path, new LinkOption[0])) return new ValidationInfo(BunnyBundle.message("validation.destination.parent"), (JComponent)this.destination);
             if (Files.isWritable(path)) return null;
-            return new ValidationInfo("\u76ee\u6807\u76ee\u5f55\u7684\u4e0a\u7ea7\u8def\u5f84\u5fc5\u987b\u662f\u53ef\u5199\u76ee\u5f55\u3002", (JComponent)this.destination);
+            return new ValidationInfo(BunnyBundle.message("validation.destination.parent"), (JComponent)this.destination);
         }
         catch (IOException | SecurityException | InvalidPathException exception) {
-            return new ValidationInfo("\u76ee\u6807\u76ee\u5f55\u65e0\u6548\u6216\u4e0d\u53ef\u8bfb\u53d6\uff1a" + ModForm.errorMessage(exception), (JComponent)this.destination);
+            return new ValidationInfo(BunnyBundle.message("validation.destination.invalid", ModForm.errorMessage(exception)), (JComponent)this.destination);
         }
     }
 
     private JPanel iconControls() {
-        JButton jButton = new JButton("\u9009\u62e9\u2026");
+        JButton jButton = new JButton(BunnyBundle.message("button.choose"));
         jButton.addActionListener(actionEvent -> this.chooseIcon());
         this.removeIcon.setEnabled(false);
         this.removeIcon.addActionListener(actionEvent -> {
             this.selectedIcon = null;
             this.previewImage = null;
             updatePreview();
-            this.iconName.setText("\u672a\u9009\u62e9\u56fe\u6807");
+            this.iconName.setText(BunnyBundle.message("mod.icon.none"));
             this.iconName.setToolTipText(null);
             this.removeIcon.setEnabled(false);
         });
@@ -328,7 +328,7 @@ public final class ModForm {
     }
 
     private void chooseIcon() {
-        FileChooserDescriptor fileChooserDescriptor = FileChooserDescriptorFactory.createSingleFileDescriptor().withTitle("\u9009\u62e9 Mod \u56fe\u6807");
+        FileChooserDescriptor fileChooserDescriptor = FileChooserDescriptorFactory.createSingleFileDescriptor().withTitle(BunnyBundle.message("dialog.icon.title"));
         VirtualFile virtualFile = FileChooser.chooseFile((FileChooserDescriptor)fileChooserDescriptor, (Project)this.project, null);
         if (virtualFile == null) {
             return;
@@ -337,11 +337,11 @@ public final class ModForm {
         try {
             String string = path.getFileName().toString().toLowerCase(Locale.ROOT);
             if (!(string.endsWith(".png") || string.endsWith(".jpg") || string.endsWith(".jpeg"))) {
-                throw new IOException("\u8bf7\u9009\u62e9 PNG \u6216 JPEG \u56fe\u50cf\u3002");
+                throw new IOException(BunnyBundle.message("error.icon.format"));
             }
             BufferedImage bufferedImage = ImageIO.read(path.toFile());
             if (bufferedImage == null) {
-                throw new IOException("\u6587\u4ef6\u4e0d\u662f\u53ef\u89e3\u7801\u7684\u56fe\u50cf\u3002");
+                throw new IOException(BunnyBundle.message("error.icon.decode"));
             }
             this.selectedIcon = path;
             this.previewImage = bufferedImage;
@@ -351,12 +351,12 @@ public final class ModForm {
             this.removeIcon.setEnabled(true);
         }
         catch (IOException | RuntimeException exception) {
-            Messages.showErrorDialog((Project)this.project, (String)("\u65e0\u6cd5\u8bfb\u53d6\u56fe\u6807\uff1a" + ModForm.errorMessage(exception)), (String)"\u56fe\u6807\u65e0\u6548");
+            Messages.showErrorDialog((Project)this.project, (String)(BunnyBundle.message("error.icon.read", ModForm.errorMessage(exception))), (String)BunnyBundle.message("error.icon.title"));
         }
     }
 
     private void chooseDestination() {
-        FileChooserDescriptor fileChooserDescriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor().withTitle("\u9009\u62e9\u89e3\u51b3\u65b9\u6848\u4f4d\u7f6e");
+        FileChooserDescriptor fileChooserDescriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor().withTitle(BunnyBundle.message("dialog.destination.title"));
         VirtualFile virtualFile = FileChooser.chooseFile((FileChooserDescriptor)fileChooserDescriptor, (Project)this.project, null);
         if (virtualFile != null) {
             this.setDestination(virtualFile.toNioPath().resolve(this.projectName()).toAbsolutePath().normalize());

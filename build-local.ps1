@@ -12,9 +12,9 @@ New-Item -ItemType Directory -Force $classes, $lib, $dist | Out-Null
 $sources = @(Get-ChildItem (Join-Path $root 'src/main/java/dev/bunnyloader/rider') -Filter '*.java' | ForEach-Object FullName)
 & "$JdkPath/bin/javac.exe" --release 21 -encoding UTF-8 -cp "$RiderPath/lib/*" -d $classes @sources
 if ($LASTEXITCODE -ne 0) { throw 'Java compilation failed' }
-& "$JdkPath/bin/jar.exe" --create --file "$lib/bunnyloader-rider-0.2.3.jar" -C $classes . -C "$root/src/main/resources" .
+& "$JdkPath/bin/jar.exe" --create --file "$lib/bunnyloader-rider-0.2.5.jar" -C $classes . -C "$root/src/main/resources" .
 if ($LASTEXITCODE -ne 0) { throw 'Plugin JAR failed' }
-$zip = Join-Path $dist 'bunnyloader-rider-0.2.3.zip'
+$zip = Join-Path $dist 'bunnyloader-rider-0.2.5.zip'
 & "$JdkPath/bin/jar.exe" --create --no-manifest --file $zip -C "$build/stage" bunnyloader-rider
 if ($LASTEXITCODE -ne 0) { throw 'Plugin ZIP failed' }
 Get-Item $zip | Select-Object FullName, Length

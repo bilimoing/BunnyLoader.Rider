@@ -67,7 +67,7 @@ implements DumbAware {
             return;
         }
         String string = itemDialog.itemName();
-        TemplateRunner.run(project, "Create BunnyLoader ModItem", path, List.of("new", "blitem", "-n", string, "-o", path.toString(), "--namespace", itemDialog.namespace()), () -> virtualFile.refresh(true, true, () -> {
+        TemplateRunner.run(project, BunnyBundle.message("task.create.item"), path, List.of("new", "blitem", "-n", string, "-o", path.toString(), "--namespace", itemDialog.namespace()), () -> virtualFile.refresh(true, true, () -> {
             VirtualFile generatedFile = LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path.resolve(string + ".cs"));
             if (generatedFile != null && !project.isDisposed()) {
                 ApplicationManager.getApplication().invokeLater(() -> {
