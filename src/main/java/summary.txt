@@ -1,0 +1,2 @@
+Summary for C:/Users/32387/AppData/Roaming/JetBrains/Rider2026.1/plugins/bunnyloader-rider/lib/bunnyloader-rider-0.2.1.jar
+Decompiled with CFR 0.152

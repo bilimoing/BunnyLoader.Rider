@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="bunnyloader-rider-0.2.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/distributions/bunnyloader-rider-0.2.2.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
